@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<link href="/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="/css/custom.css" rel="stylesheet" />
+
+		<title><%= title %></title>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container">
+				<a class="navbar-brand" href="/"><%= title %></a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarNav"
+					aria-controls="navbarNav"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="/">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="/attractions">Attractions</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/shop">Shop</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/tickets">Tickets</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/login">Register / Login</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container mt-5">
+			<h1>Welcome to Jurassic Island Attractions</h1>
+		
+			<% if (errorMessage) { %>
+				<div class="alert alert-danger" role="alert">
+					<%= errorMessage %>
+				</div>
+			<% } %>
+			<% if (successMessage) { %>
+				<div class="alert alert-success" role="alert">
+					<%= successMessage %>
+				</div>
+			<% } %>
+		</div>
+
+		<div class="container-fluid">
+			<div id="carouselExampleControls" class="carousel slide custom-carousel" data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<% attractions.forEach(function(attraction, index) { %>
+						<div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+							<img class="d-block w-100" src="<%= attraction.image %>" alt="<%= attraction.attraction %>">
+							<div class="carousel-caption d-none d-md-block">
+								<h5><%= attraction.attraction %></h5>
+								<p><%= attraction.type %></p>
+							</div>
+						</div>
+					<% }); %>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+				  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				  <span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+				  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				  <span class="visually-hidden">Next</span>
+				</button>
+			</div>
+		</div>
+		
+
+        
+
+		<div class="container mt-5 text-center">
+			<p>Footer</p>
+		</div>
+
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/custom.js"></script>
+	</body>
+</html>
