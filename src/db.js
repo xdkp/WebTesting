@@ -1,11 +1,10 @@
-const { Pool } = require("pg");
+const { Pool } = require('pg');
 
 const pool = new Pool({
-	user: "ctfuser",
-	host: "db",
-	database: "ctfdb",
-	password: "ctfpass",
-	port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 module.exports = pool;
