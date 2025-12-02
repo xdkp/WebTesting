@@ -87,13 +87,16 @@ app.get('/shop', requireAuth, async (req, res) => {
     const successMessage = req.query.success;
     const itemsPerPage = 12;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+    const startIndex = (page - 1) * itemsPerPage;
 
     try {
-        const totalResult = await pool.query('SELECT COUNT(*) FROM items');
-        const totalItems = parseInt(totalResult.rows[0].count, 10);
-        const startIndex = (page - 1) * itemsPerPage;
-        const result = await pool.query('SELECT * FROM items LIMIT $1 OFFSET $2', [itemsPerPage, startIndex]);
+        // Combine COUNT and SELECT into a single query using window function
+        const result = await pool.query(
+            'SELECT *, COUNT(*) OVER() AS total_count FROM items LIMIT $1 OFFSET $2',
+            [itemsPerPage, startIndex]
+        );
         const items = result.rows;
+        const totalItems = items.length > 0 ? parseInt(items[0].total_count, 10) : 0;
 
         res.render('shop', { 
             title: title, 

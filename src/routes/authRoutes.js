@@ -38,8 +38,7 @@ router.post('/register', userValidationRules(), validate, async (req, res) => {
     let hashedPassword = null;
 
     if (password) {
-        const salt = bcrypt.genSaltSync(SALT_ROUNDS);
-        hashedPassword = await bcrypt.hash(password, salt);
+        hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     } else {
         res.redirect(`/login?error=${encodeURIComponent('Error registering user.')}`);
     }
